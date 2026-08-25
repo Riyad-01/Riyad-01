@@ -1,26 +1,17 @@
-# Hi, I'm Riyad Ahmed 👋
-
-**AI-Native Developer | eLearning Content Writer, Product Designer & Digital Marketer**
-
-I don't just code. I build with AI.
-
-6+ years of experience in eLearning content, digital design, and marketing — now shipping 10x faster with AI tools like Claude Code, Cursor, and ChatGPT.
-
-### 🚀 What I Do
-- **eLearning Content Writing** - Engaging, learner-focused educational content
-- **Product Design** - Clean, modern, and user-centric UI/UX
-- **Digital Marketing** - Blogs, Sales Copy & Content Strategy that converts
-- **AI-Assisted Development** - From idea to live website in hours, not weeks
-
-### ⚡ Current Focus
-Building **orchesyn-website** — my professional portfolio crafted with an AI-assisted workflow. Fully responsive, modern, and built for performance.
-
-### 🛠️ My Stack
-`HTML5` `CSS3` `JavaScript` `Figma` `AI Tools` `Git & GitHub`
-
-### 📍 Sylhet, Bangladesh | 🌐 Open to freelance & collaborations
-
-Let's build something amazing together!
-
----
-*My Workflow: Prompt → Design → Build with AI → Ship* 🚀
+# Hi, I am Riyad Ahmed 👋
+<p align='center'>
+  <img src='https://readme-typing-svg.herokuapp.com/?font=Fira+Code&pause=1000&color=36BCF7&center=true&vCenter=true&width=600&lines=AI-Native+Developer;eLearning+%7C+Product+Design+%7C+Marketing;Building+with+Next.js+React+Node.js+and+AI' alt='Typing SVG' />
+</p>p>
+- 🔭 Currently building **[orchesyn-website](https://github.com/Riyad-01/orchesyn-website)** - an AI-native agentic workspace
+- 💡 6+ years in eLearning content, product design and digital marketing
+- 🌱 Learning in public: AI-assisted development and modern web
+- 📫 Reach me at **riyadahmed646@gmail.com**
+### ⚡ Tech Stack
+<p align='left'>
+  <img src='https://skillicons.dev/icons?i=html,css,js,react,nextjs,nodejs,figma,git,github,vscode' alt='stack' />
+</p>p>
+### 📊 GitHub Stats
+<p align='center'>
+  <img src='https://github-readme-stats.vercel.app/api?username=Riyad-01&show_icons=true&theme=tokyonight' alt='stats' height='165' />
+    <img src='https://github-readme-stats.vercel.app/api/top-langs/?username=Riyad-01&layout=compact&theme=tokyonight' alt='toplang' height='165' />
+</p>p>
