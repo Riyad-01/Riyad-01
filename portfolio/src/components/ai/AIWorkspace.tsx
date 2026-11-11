@@ -170,7 +170,6 @@ export default function AIWorkspace({ initialMode, project, initialPrompt, varia
       sentInitial.current = true;
       void send(initialPrompt, initialMode ?? (project ? "project" : "concierge"));
     }
-    return () => abort.current?.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -110,6 +110,16 @@ export default function Header() {
                 className="btn btn--ghost"
                 onClick={() => {
                   menu.current?.close();
+                  openPalette();
+                }}
+              >
+                Search
+              </button>
+              <button
+                type="button"
+                className="btn btn--ghost"
+                onClick={() => {
+                  menu.current?.close();
                   openPreferences();
                 }}
               >

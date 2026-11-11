@@ -5,7 +5,7 @@ export const NODES = [
   { id: "learning", label: "Learning", x: -0.42, y: -0.62, z: -0.3, kind: "discipline" },
   { id: "design", label: "Design", x: 0.12, y: 0.3, z: -0.35, kind: "discipline" },
   { id: "ai", label: "AI", x: 0.12, y: -0.3, z: 0.4, kind: "discipline" },
-  { id: "teams", label: "Teams", x: 0.6, y: 0.0, z: 0.0, kind: "discipline" },
+  { id: "teams", label: "Teams", x: 0.58, y: 0.12, z: 0.0, kind: "discipline" },
   { id: "outcome", label: "Business Outcomes", x: 1.0, y: 0.0, z: 0.0, kind: "result" },
 ] as const;
 

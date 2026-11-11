@@ -328,3 +328,13 @@ a.status-pill:hover {
     grid-column: 1 / -1;
   }
 }
+.wordmark__name { white-space: nowrap; }
+@media (max-width: 419px) {
+  .search-btn {
+    display: none;
+  }
+  .ask-btn {
+    margin-left: 0;
+    padding-inline: var(--s-3);
+  }
+}

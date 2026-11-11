@@ -221,20 +221,34 @@ export function Track<K extends keyof AnalyticsEvents>({ event, props }: { event
   return null;
 }
 
-/** Marks elements with [data-reveal] as visible when they enter the viewport. */
+/**
+ * Reveals [data-reveal] elements as they enter the viewport.
+ * Uses the Web Animations API rather than changing attributes, so the
+ * server-rendered HTML is never altered underneath React.
+ */
 export function RevealObserver() {
   const pathname = usePathname();
   useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-in])");
-    if (!("IntersectionObserver" in window)) {
-      els.forEach((el) => el.setAttribute("data-in", ""));
+    const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const reduced = document.documentElement.dataset.motion === "reduced";
+    const show = (el: HTMLElement, animate: boolean) => {
+      const i = Number(getComputedStyle(el).getPropertyValue("--i")) || 0;
+      el.animate([{ opacity: 0, transform: "translateY(18px)" }, { opacity: 1, transform: "none" }], {
+        duration: animate ? 700 : 0,
+        delay: animate ? i * 70 : 0,
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+        fill: "both",
+      });
+    };
+    if (!("IntersectionObserver" in window) || reduced) {
+      els.forEach((el) => show(el, false));
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            e.target.setAttribute("data-in", "");
+            show(e.target as HTMLElement, true);
             io.unobserve(e.target);
           }
         }

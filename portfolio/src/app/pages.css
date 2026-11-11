@@ -85,7 +85,7 @@
 }
 .case-head__title {
   margin-top: var(--s-6);
-  font-size: clamp(2.5rem, 1rem + 7.4vw, 7.5rem);
+  font-size: clamp(2.25rem, 1rem + 5.2vw, 5.75rem);
 }
 .case-head__headline {
   margin-top: var(--s-4);
@@ -1109,4 +1109,16 @@
   display: grid;
   align-items: center;
   padding-block: var(--s-16);
+}
+.exp-metrics > div {
+  grid-template-rows: auto auto 1fr;
+}
+.exp-metrics dt {
+  order: 2;
+}
+.exp-metrics .metric__value {
+  order: 1;
+}
+.exp-metrics dd.small {
+  order: 3;
 }

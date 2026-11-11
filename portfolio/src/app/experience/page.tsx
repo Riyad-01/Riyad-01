@@ -34,11 +34,13 @@ export default function ExperiencePage() {
           <dl className="exp-metrics">
             {metrics.map((m) => (
               <div key={m.id}>
-                <dd className="metric__value">{m.value}</dd>
                 <dt className="metric__label">{m.label}</dt>
-                <Link href={m.source.href} className="link small">
-                  Source: {m.source.label}
-                </Link>
+                <dd className="metric__value">{m.value}</dd>
+                <dd className="small">
+                  <Link href={m.source.href} className="link">
+                    Source: {m.source.label}
+                  </Link>
+                </dd>
               </div>
             ))}
           </dl>

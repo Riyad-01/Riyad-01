@@ -891,13 +891,6 @@ dialog[open].drawer {
    running (html.js) so nothing is ever lost if scripts fail. */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity var(--d-deliberate) var(--e-entrance), transform var(--d-cinematic) var(--e-entrance);
-  transition-delay: calc(var(--i, 0) * 70ms);
-}
-.js [data-reveal][data-in] {
-  opacity: 1;
-  transform: none;
 }
 /* Text-mask reveal for major statements */
 .mask {
@@ -926,7 +919,6 @@ dialog[open].drawer {
   }
   .js [data-reveal] {
     opacity: 1;
-    transform: none;
   }
 }
 [data-motion="reduced"] {

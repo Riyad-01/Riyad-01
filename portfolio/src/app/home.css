@@ -891,3 +891,9 @@ html:not(.js) .process__list li {
     grid-template-columns: 1fr;
   }
 }
+.chain__content .btn {
+  justify-self: start;
+  white-space: normal;
+  text-align: left;
+  padding-block: var(--s-2);
+}
