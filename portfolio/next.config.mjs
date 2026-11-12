@@ -1,4 +1,5 @@
 const dev = process.env.NODE_ENV !== "production";
+const staticExport = process.env.NEXT_PUBLIC_STATIC === "1";
 
 // Security headers. The CSP allows inline scripts/styles because Next.js
 // injects them for hydration; everything else is locked to this origin.
@@ -19,7 +20,9 @@ const csp = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  async headers() {
+  // GitHub Pages build: plain static files under /<repo-name>.
+  ...(staticExport ? { output: "export", trailingSlash: true, images: { unoptimized: true }, basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "" } : {}),
+  ...(staticExport ? {} : { async headers() {
     return [
       {
         source: "/:path*",
@@ -40,7 +43,7 @@ const nextConfig = {
         ],
       },
     ];
-  },
+  } }),
 };
 
 export default nextConfig;

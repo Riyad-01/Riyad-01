@@ -76,6 +76,11 @@ export default function ContactForm() {
   )}`;
 
   const submit = async () => {
+    if (process.env.NEXT_PUBLIC_STATIC === "1") {
+      setPhase("mailto");
+      requestAnimationFrame(() => status.current?.focus());
+      return;
+    }
     setPhase("sending");
     try {
       const res = await fetch("/api/contact", {

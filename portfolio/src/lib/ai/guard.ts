@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-
 /**
  * Input and output guards. These run in application code, before and after
  * the model. The model is treated as an untrusted reasoning component: it is
@@ -93,13 +91,6 @@ export function redact(text: string): string {
     .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "[email]")
     .replace(/\+?\d[\d\s().-]{7,}\d/g, "[number]")
     .replace(/https?:\/\/\S+/gi, "[url]");
-}
-
-/** Daily-rotating, salted hash so a visitor can be rate-limited without storing their IP. */
-export function visitorKey(ip: string): string {
-  const day = new Date().toISOString().slice(0, 10);
-  const salt = process.env.AI_LOG_SALT ?? "riyad-portfolio";
-  return createHash("sha256").update(`${salt}:${day}:${ip}`).digest("hex").slice(0, 16);
 }
 
 export type SecurityEvent =

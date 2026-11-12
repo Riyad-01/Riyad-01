@@ -1,4 +1,11 @@
-import { visitorKey } from "./ai/guard";
+import { createHash } from "node:crypto";
+
+/** Daily-rotating, salted hash so a visitor can be rate-limited without storing their IP. */
+export function visitorKey(ip: string): string {
+  const day = new Date().toISOString().slice(0, 10);
+  const salt = process.env.AI_LOG_SALT ?? "riyad-portfolio";
+  return createHash("sha256").update(`${salt}:${day}:${ip}`).digest("hex").slice(0, 16);
+}
 
 /** Same-origin check for state-changing or costly endpoints. */
 export function sameOrigin(req: Request): boolean {

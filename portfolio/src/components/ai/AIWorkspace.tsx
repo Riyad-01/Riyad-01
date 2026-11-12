@@ -108,29 +108,37 @@ export default function AIWorkspace({ initialMode, project, initialPrompt, varia
       const update = (patch: Partial<Turn>) => setTurns((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)));
 
       try {
-        const res = await fetch("/api/ai", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ mode: as, message, project: as === "project" ? project : undefined, role, history: as === "concierge" || as === "project" ? history : undefined }),
-          signal: controller.signal,
-        });
-        if (!res.body) throw new Error("no body");
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let done = false;
         let final: AiResponse | null = null;
-        while (!done) {
-          const chunk = await reader.read();
-          done = chunk.done;
-          buffer += decoder.decode(chunk.value ?? new Uint8Array(), { stream: !done });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() ?? "";
-          for (const line of lines) {
-            if (!line.trim()) continue;
-            const event = JSON.parse(line) as StreamEvent;
-            if (event.type === "stage") update({ stage: event.label });
-            else final = event.payload;
+        if (process.env.NEXT_PUBLIC_STATIC === "1") {
+          // Static hosting: the same grounded engine runs in the browser. No server, no key, nothing leaves the device.
+          const [{ runAgent }, { RequestSchema }] = await Promise.all([import("@/lib/ai/engine"), import("@/lib/ai/types")]);
+          const parsed = RequestSchema.safeParse({ mode: as, message, project: as === "project" ? project : undefined, role, history: as === "concierge" || as === "project" ? history : undefined });
+          if (!parsed.success) throw new Error("invalid");
+          final = await runAgent(parsed.data, (label) => update({ stage: label }));
+        } else {
+          const res = await fetch("/api/ai", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ mode: as, message, project: as === "project" ? project : undefined, role, history: as === "concierge" || as === "project" ? history : undefined }),
+            signal: controller.signal,
+          });
+          if (!res.body) throw new Error("no body");
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = "";
+          let done = false;
+          while (!done) {
+            const chunk = await reader.read();
+            done = chunk.done;
+            buffer += decoder.decode(chunk.value ?? new Uint8Array(), { stream: !done });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() ?? "";
+            for (const line of lines) {
+              if (!line.trim()) continue;
+              const event = JSON.parse(line) as StreamEvent;
+              if (event.type === "stage") update({ stage: event.label });
+              else final = event.payload;
+            }
           }
         }
         if (!final) throw new Error("no answer");

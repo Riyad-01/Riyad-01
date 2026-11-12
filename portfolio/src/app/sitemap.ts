@@ -3,6 +3,8 @@ import { resumes } from "@/content/experience";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date(site.lastReviewed);
   const page = (path: string, priority: number) => ({ url: `${site.url}${path}`, lastModified, changeFrequency: "monthly" as const, priority });

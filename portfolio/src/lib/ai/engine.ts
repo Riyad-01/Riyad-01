@@ -6,7 +6,6 @@ import { allowedHrefs } from "./knowledge";
 import { getRetriever } from "./retrieval";
 import { detectInjection, detectRestricted, logEvent, RESTRICTED_REPLY, sanitize, scrubOutput } from "./guard";
 import { circuit, withinModelBudget } from "./ratelimit";
-import { createAnthropicModel } from "./providers/anthropic";
 import { LIMITS, NO_EVIDENCE, ResponseSchema } from "./types";
 import type { AgentMode, AiAction, AiRequest, AiResponse, ChatModel, KnowledgeRecord, Retrieved } from "./types";
 
@@ -28,7 +27,11 @@ import type { AgentMode, AiAction, AiRequest, AiResponse, ChatModel, KnowledgeRe
 
 let model: ChatModel | null | undefined;
 export function getModel(): ChatModel | null {
-  if (model === undefined) model = createAnthropicModel();
+  if (model === undefined) {
+    // Static (GitHub Pages) builds run in the browser and never include a model provider or key.
+    if (process.env.NEXT_PUBLIC_STATIC === "1") model = null;
+    else model = (require("./providers/anthropic") as typeof import("./providers/anthropic")).createAnthropicModel();
+  }
   return model;
 }
 

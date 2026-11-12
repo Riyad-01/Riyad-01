@@ -13,9 +13,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-// Reads live configuration so the page always describes the system as it is actually running.
-export const dynamic = "force-dynamic";
-
 export default function PrivacyPage() {
   const ai = aiStatus();
   const records = publicRecords().length;

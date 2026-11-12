@@ -2,7 +2,15 @@
 
 The site is a standard Next.js app. Vercel is the simplest host; any Node host works.
 
-## Vercel (recommended)
+## GitHub Pages (free, automatic)
+The workflow in `.github/workflows/pages.yml` builds a static version and publishes it.
+1. Merge the branch into `main` (GitHub Pages only deploys from `main` by default).
+2. In the repository: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. Open the **Actions** tab; when "Deploy portfolio to GitHub Pages" turns green, your site is at `https://<your-username>.github.io/<repository-name>/`.
+
+In this static version Riyad AI runs in the visitor's browser using the same approved content and rules (no server, no API key, nothing sent anywhere), and the contact form opens the visitor's email app. The Claude model option and server-side email need the Vercel route below.
+
+## Vercel (full version, with server features)
 1. Push this repository to GitHub.
 2. In Vercel: **Add New → Project →** choose the repository.
 3. Set **Root Directory** to `portfolio` (important — the app is not at the repository root).
