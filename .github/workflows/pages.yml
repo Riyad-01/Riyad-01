@@ -1,0 +1,57 @@
+name: Deploy portfolio to GitHub Pages
+
+on:
+  push:
+    branches: [main, claude/riyad-ahmed-portfolio-4q7tqs]
+    paths: ["portfolio/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portfolio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio/package-lock.json
+      - uses: actions/configure-pages@v5
+      - run: npm ci
+      - run: npm test
+      - name: Build static site
+        env:
+          NEXT_PUBLIC_STATIC: "1"
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: |
+          # GitHub Pages serves files only, so the server API routes are left out.
+          # Riyad AI runs in the browser in this build.
+          rm -rf src/app/api
+          npx next build
+          touch out/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
